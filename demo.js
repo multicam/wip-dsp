@@ -12,12 +12,17 @@ let pixels, pixels2;
 let cw, cw2, ch, ch2;
 let speedDiv = document.getElementById('speedHead');
 let avgDisplay = document.getElementById('avg');
+
+const log = console.log
+
+
 loadWASM()
-  .then(module => {
+  .then( module => {
     wam = module;
 }).catch((err) => {
-  console.log('Error in fetching module: ', err);
+  log('Error in fetching module: ', err);
 }).then(() => {
+    log('coucou')
     window.onload = (() => {
       createStats();
       addButtons();
@@ -317,6 +322,8 @@ function addButtons (filtersArr) {
   buttonDiv.id = 'filters';
   const editor = document.getElementById('editor')
   editor.insertBefore(buttonDiv, editor.firstChild);
+
+  log(filters)
   for (let i = 0; i < filters.length; i++) {
     let filterDiv = document.createElement('div');
     filterDiv.className = "indFilter";

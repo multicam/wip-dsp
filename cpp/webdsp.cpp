@@ -5,6 +5,7 @@
 
 extern "C" {
   int doubler(int v) { return v << 1; }
+  
   int getPixel (int x, int y, int* arr, int width, int height) {
     if (x < 0 || y < 0) return 0;
     if (x >= (width) || y >= (height)) return 0;
@@ -26,6 +27,7 @@ extern "C" {
       data[i+3] = a;
     }
   }
+
   void brighten (unsigned char* data, int len, int brightness) {
     for (int i = 0; i < len; i += 4) {
       data[i] + data[i] + brightness > 255 ? 255 : data[i] += brightness;
@@ -33,6 +35,7 @@ extern "C" {
       data[i+2] + data[i+2] + brightness > 255 ? 255 : data[i+2] += brightness;
     }
   }
+
   void invert (unsigned char* data, int len) {
     for (int i = 0; i < len; i += 4) {
       data[i] = 255 - data[i]; //r
@@ -40,6 +43,7 @@ extern "C" {
       data[i+2] = 255 - data[i+2]; //b
     }
   }
+
   void noise (float* data, int len) {
     int random; 
     for (int i = 0; i < len; i += 4) {
@@ -49,6 +53,7 @@ extern "C" {
       data[i+2] = data[i+2] + random; //b
     }
   }
+
   void multiFilter (unsigned char* data, int len, int width, int filterType, int mag, int mult, int adj) {
     for (int i = 0; i < len; i += filterType) {
       if (i % 4 != 3) {
@@ -56,6 +61,7 @@ extern "C" {
       }
     }
   }
+
   void multiFilterFloat (float* data, int len, int width, int filterType, int mag, int mult, int adj) {
     for (int i = 0; i < len; i += filterType) {
       if (i % 4 != 3) {
@@ -81,7 +87,6 @@ extern "C" {
         data[doffset + 1] = avg;
         data[doffset + 2] = avg;
         data[doffset + 3] = 255;
-
       }
     }
 
@@ -121,6 +126,7 @@ extern "C" {
       }
     }
   }
+  
   void convFilter (float* data, int width, int height, float* kern, int kWidth, int kHeight, float divisor, float bias, int count) {
     float r, g, b;
     int yy, xx, imageOffset, kernelOffset, pix; 

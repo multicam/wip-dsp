@@ -1,38 +1,43 @@
-const gulp = require('gulp');
-const bs = require('browser-sync').create();
-const child = require('child_process');
-const exec = require('child_process').exec;
-const fs = require('fs');
+const bs = require('browser-sync').create()
+const exec = require('child_process').exec
+const {task, watch, series, parallel} = require ('gulp')
 
-gulp.task('default', ['server', 'recompile', 'browser-sync']);
+const log = console.log
+const getCompileCommand = () => '. ./compileWASM.sh'
 
-gulp.task('server', () => {
-  let server = child.spawn('node', ['server.js']);
-});
-
-// gulp.task('recompile', (cb) => {
-//   const compileCommand = getCompileCommand();
-//   exec(compileCommand, (err, stdout, stderr) => {
-
-//     console.log(stderr);
-//     cb(err);
-//     bs.reload();
-//   });
-// });
-
-gulp.task('browser-sync', ['recompile'], () => {
-  bs.init({
-    proxy: 'localhost:3000',
+const fnCompile = cb => {
+  const compileCommand = getCompileCommand();
+  return exec(compileCommand, (err, stdout, stderr) => {
+    log(stderr);
+    log(stdout);
+    cb(err);
+    bs.reload();
   });
-});
+}
 
-// gulp.watch('cpp/webdsp.cpp', ['recompile']);
+const fnBrowserSync = () => {
+  bs.init({
+    // proxy: 'localhost:6000',
+    server: {
+      port: 6000,
+      baseDir: './'
+    }
+  });
+}
 
-gulp.watch(['demo.js', 'webdsp.js', 'index.html', 'style.css', 'compileWASM.sh'], () => {
+const fnServer = () => child.spawn('node', ['server.js'])
+
+task( 'browser-sync', series(fnCompile), fnBrowserSync );
+task( 'compile', fnCompile );
+
+watch(['cpp/webdsp.cpp'], fnCompile )
+watch(['demo.js', 'webdsp.js', 'index.html', 'style.css', 'compileWASM.sh'], () => {
   bs.reload();
 });
 
-function getCompileCommand() {
+// exports.default = cb => {
+//   series(fnCompile,fnServer,fnBrowserSync)
+//   cb();
+// }
 
-    return '. ./compileWASM.sh';
-}
+task('default', series(fnCompile, fnBrowserSync))

@@ -1,12 +1,4 @@
-set CPP_FUNCS=[^
-'_grayScale', ^
-'_brighten', ^
-'_invert', ^
-'_noise', ^
-'_multiFilter', ^
-'_multiFilterFloat', ^
-'_sobelFilter', ^
-'_convFilter',]
+set CPP_FUNCS=[ '_grayScale', '_brighten', '_invert', '_noise', '_multiFilter', '_multiFilterFloat', '_sobelFilter', '_convFilter' ]
 
 echo "compiling C++ to WASM ..."
 emcc -o ./lib/webdsp_c.js ./cpp/webdsp.cpp -lm -O3^
