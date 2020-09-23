@@ -17,7 +17,6 @@ const fnCompile = cb => {
 
 const fnBrowserSync = () => {
   bs.init({
-    // proxy: 'localhost:6000',
     server: {
       port: 6000,
       baseDir: './'
@@ -34,10 +33,5 @@ watch(['cpp/webdsp.cpp','compileWASM.sh'], fnCompile )
 watch(['index.html', 'demo.js', 'webdsp.js', 'style.css', 'compileWASM.sh'], () => {
   bs.reload();
 });
-
-// exports.default = cb => {
-//   series(fnCompile,fnServer,fnBrowserSync)
-//   cb();
-// }
 
 task('default', series(fnCompile, fnBrowserSync))
