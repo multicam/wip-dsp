@@ -22,10 +22,10 @@ loadWASM()
 }).catch((err) => {
   log('Error in fetching module: ', err);
 }).then(() => {
-    log('coucou')
+    log('coucou ####')
     window.onload = (() => {
-      createStats();
       addButtons();
+      createStats();
       graphStats();
       appendWasmCheck();
     })();
@@ -323,7 +323,7 @@ function addButtons (filtersArr) {
   const editor = document.getElementById('editor')
   editor.insertBefore(buttonDiv, editor.firstChild);
 
-  log(filters)
+  log('buttons', filters)
   for (let i = 0; i < filters.length; i++) {
     let filterDiv = document.createElement('div');
     filterDiv.className = "indFilter";

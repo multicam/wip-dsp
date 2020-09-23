@@ -30,8 +30,8 @@ const fnServer = () => child.spawn('node', ['server.js'])
 task( 'browser-sync', series(fnCompile), fnBrowserSync );
 task( 'compile', fnCompile );
 
-watch(['cpp/webdsp.cpp'], fnCompile )
-watch(['demo.js', 'webdsp.js', 'index.html', 'style.css', 'compileWASM.sh'], () => {
+watch(['cpp/webdsp.cpp','compileWASM.sh'], fnCompile )
+watch(['index.html', 'demo.js', 'webdsp.js', 'style.css', 'compileWASM.sh'], () => {
   bs.reload();
 });
 
